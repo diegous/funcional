@@ -1,0 +1,1 @@
+Permite detectar errores de tipos al compilar y permite detectar errores de tipos en tiempo de ejecución
