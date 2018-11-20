@@ -5,26 +5,23 @@ main = do
   runTestTT
     (
       TestList
-        [
-          -- sort3
-          TestCase (assertEqual "sort3"  (1,2,3) (sort3 1 2 3)),
-          TestCase (assertEqual "sort3"  (1,2,3) (sort3 1 3 2)),
-          TestCase (assertEqual "sort3"  (1,2,3) (sort3 2 1 3)),
-          TestCase (assertEqual "sort3"  (1,2,3) (sort3 2 3 1)),
-          TestCase (assertEqual "sort3"  (1,2,3) (sort3 3 1 2)),
-          TestCase (assertEqual "sort3"  (1,2,3) (sort3 3 2 1)),
+      [
+        -- sort3
+        (1,2,3) ~=? sort3 1 2 3
+      , (1,2,3) ~=? sort3 1 3 2
+      , (1,2,3) ~=? sort3 2 1 3
+      , (1,2,3) ~=? sort3 2 3 1
+      , (1,2,3) ~=? sort3 3 1 2
+      , (1,2,3) ~=? sort3 3 2 1
 
-          -- sort3'
-          TestCase (assertEqual "sort3'"  (1,2,3) (sort3' 1 2 3)),
-          TestCase (assertEqual "sort3'"  (1,2,3) (sort3' 1 3 2)),
-          TestCase (assertEqual "sort3'"  (1,2,3) (sort3' 2 1 3)),
-          TestCase (assertEqual "sort3'"  (1,2,3) (sort3' 2 3 1)),
-          TestCase (assertEqual "sort3'"  (1,2,3) (sort3' 3 1 2)),
-          TestCase (assertEqual "sort3'"  (1,2,3) (sort3' 3 2 1)),
-
-          -- last tests to avoid trailing comma
-          TestCase (assertEqual "closing" 0  0)
-        ]
+        -- sort3'
+      , (1,2,3) ~=? sort3' 1 2 3
+      , (1,2,3) ~=? sort3' 1 3 2
+      , (1,2,3) ~=? sort3' 2 1 3
+      , (1,2,3) ~=? sort3' 2 3 1
+      , (1,2,3) ~=? sort3' 3 1 2
+      , (1,2,3) ~=? sort3' 3 2 1
+      ]
     )
 
 -----------------------------------------------------------------------------------------

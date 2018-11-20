@@ -5,16 +5,13 @@ main = do
   runTestTT
     (
       TestList
-        [
-          -- biciesto
-          TestCase (assertEqual ""  True (isLeapYear 1996)),
-          TestCase (assertEqual ""  True (isLeapYear 2000)),
-          TestCase (assertEqual ""  False (isLeapYear 2003)),
-          TestCase (assertEqual ""  False (isLeapYear 1900)),
-
-          -- last tests to avoid trailing comma
-          TestCase (assertEqual "closing" 0  0)
-        ]
+      [
+        -- biciesto
+         True ~=? isLeapYear 1996
+      ,  True ~=? isLeapYear 2000
+      , False ~=? isLeapYear 2003
+      , False ~=? isLeapYear 1900
+      ]
     )
 
 -----------------------------------------------------------------------------------------

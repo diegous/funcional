@@ -5,50 +5,46 @@ main = do
   runTestTT
     (
       TestList
-        [
-          -- ColorPrimario & ColorSecundario
-          -- mezclar
-          TestCase (assertEqual "mezclar" Naranja (mezclar Rojo Amarillo)),
-          TestCase (assertEqual "mezclar" Naranja (mezclar Amarillo Rojo)),
-          TestCase (assertEqual "mezclar" Violeta (mezclar Rojo Azul    )),
-          TestCase (assertEqual "mezclar" Violeta (mezclar Azul Rojo    )),
-          TestCase (assertEqual "mezclar" Verde   (mezclar Amarillo Azul)),
-          TestCase (assertEqual "mezclar" Verde   (mezclar Azul Amarillo)),
+      [
+        -- ColorPrimario & ColorSecundario
+        -- mezclar
+        Naranja ~=? mezclar Rojo Amarillo
+      , Naranja ~=? mezclar Amarillo Rojo
+      , Violeta ~=? mezclar Rojo Azul
+      , Violeta ~=? mezclar Azul Rojo
+      , Verde   ~=? mezclar Amarillo Azul
+      , Verde   ~=? mezclar Azul Amarillo
 
 
-          -- Punto
-          -- distancia
-          TestCase (assertEqual "distancia" 5  (distancia (Punto2D 0 0) (Punto2D 3 4))),
-          TestCase (assertEqual "distancia" 13 (distancia (Punto2D 5 7) (Punto2D 10 19))),
+        -- Punto
+        -- distancia
+      , 5  ~=? distancia (Punto2D 0 0) (Punto2D 3 4)
+      , 13 ~=? distancia (Punto2D 5 7) (Punto2D 10 19)
 
-          -- -- xcoord
-          TestCase (assertEqual "xcoord" 5 (xcoord (Punto2D 5 3))),
-          TestCase (assertEqual "xcoord" 5 (xcoord (Punto3D 5 3 1))),
+        -- -- xcoord
+      , 5 ~=? xcoord (Punto2D 5 3)
+      , 5 ~=? xcoord (Punto3D 5 3 1)
 
-          -- -- ycoord
-          TestCase (assertEqual "ycoord" 3 (ycoord (Punto2D 5 3))),
-          TestCase (assertEqual "ycoord" 3 (ycoord (Punto3D 5 3 1))),
+        -- -- ycoord
+      , 3 ~=? ycoord (Punto2D 5 3)
+      , 3 ~=? ycoord (Punto3D 5 3 1)
 
-          -- -- suma
-          TestCase (assertEqual "suma" (Punto2D 5 3) (suma (Punto2D 5 3) (Punto2D 0 0))),
-          TestCase (assertEqual "suma" (Punto2D 0 0) (suma (Punto2D (-5.0) (-3.0)) (Punto2D 5 3))),
-
-
-          -- Figura
-          -- area
-          TestCase (assertEqual "area" 8  (area (Rectangulo (Punto2D 0 0) 2 4))),
-
-          -- perimetro
-          TestCase (assertEqual "perimetro" 8  (perimetro (Rectangulo (Punto2D 0 0) 1 3))),
-
-          -- mover
-          TestCase (assertEqual "mover" (Circulo    (Punto2D 2 3) 3)   (mover (Circulo    (Punto2D 0 0) 3)   (Punto2D 2 3))),
-          TestCase (assertEqual "mover" (Rectangulo (Punto2D 2 3) 1 3) (mover (Rectangulo (Punto2D 0 0) 1 3) (Punto2D 2 3))),
+        -- -- suma
+      , Punto2D 5 3 ~=? suma (Punto2D 5 3) (Punto2D 0 0)
+      , Punto2D 0 0 ~=? suma (Punto2D (-5.0) (-3.0)) (Punto2D 5 3)
 
 
-          -- last tests to avoid trailing comma
-          TestCase (assertEqual "closing" 0  0)
-        ]
+        -- Figura
+        -- area
+      , 8 ~=? area (Rectangulo (Punto2D 0 0) 2 4)
+
+        -- perimetro
+      , 8 ~=? perimetro (Rectangulo (Punto2D 0 0) 1 3)
+
+        -- mover
+      , Circulo    (Punto2D 2 3) 3   ~=? mover (Circulo    (Punto2D 0 0) 3)   (Punto2D 2 3)
+      , Rectangulo (Punto2D 2 3) 1 3 ~=? mover (Rectangulo (Punto2D 0 0) 1 3) (Punto2D 2 3)
+      ]
     )
 
 -----------------------------------------------------------------------------------------

@@ -6,66 +6,63 @@ main = do
   runTestTT
     (
       TestList
-        [
-          -- sum'
-          TestCase (assertEqual "sum'"  0 (sum' [])),
-          TestCase (assertEqual "sum'"  0 (sum' [0])),
-          TestCase (assertEqual "sum'"  1 (sum' [0,0,0,1,0])),
-          TestCase (assertEqual "sum'" 15 (sum' [1,2,3,4,5])),
+      [
+        -- sum'
+         0 ~=? sum' []
+      ,  0 ~=? sum' [0]
+      ,  1 ~=? sum' [0,0,0,1,0]
+      , 15 ~=? sum' [1,2,3,4,5]
 
-          -- any'
-          TestCase (assertEqual "any'" False (any' [])),
-          TestCase (assertEqual "any'" False (any' [False, False, False])),
-          TestCase (assertEqual "any'" True  (any' [False, False, True, False])),
-          TestCase (assertEqual "any'" True  (any' [True, True, True, True])),
+        -- any'
+      , False ~=? any' []
+      , False ~=? any' [False, False, False]
+      ,  True ~=? any' [False, False, True, False]
+      ,  True ~=? any' [True, True, True, True]
 
-          -- all'
-          TestCase (assertEqual "all'" True  (all' [])),
-          TestCase (assertEqual "all'" True  (all' [True,True,True])),
-          TestCase (assertEqual "all'" False (all' [True, True, False, True])),
-          TestCase (assertEqual "all'" False (all' [False, False, False, False])),
+        -- all'
+      ,  True ~=? all' []
+      ,  True ~=? all' [True,True,True]
+      , False ~=? all' [True, True, False, True]
+      , False ~=? all' [False, False, False, False]
 
-          -- codes
-          TestCase (assertEqual "codes" []  (codes [])),
-          TestCase (assertEqual "codes" [97]  (codes ['a'])),
-          TestCase (assertEqual "codes" [122, 97]  (codes ['z', 'a'])),
-          TestCase (assertEqual "codes" [122, 98, 97]  (codes ['z', 'b', 'a'])),
+        -- codes
+      , []            ~=? codes []
+      , [97]          ~=? codes ['a']
+      , [122, 97]     ~=? codes ['z', 'a']
+      , [122, 98, 97] ~=? codes ['z', 'b', 'a']
 
-          -- remainders
-          TestCase (assertEqual "remainders" []  (remainders 5 [])),
-          TestCase (assertEqual "remainders" [1, 2, 3, 4, 0, 1, 2, 3, 4, 0]  (remainders 5 [1, 2, 3, 4, 5, 6, 7, 8, 9, 10])),
+        -- remainders
+      , [] ~=? remainders 5 []
+      , [1, 2, 3, 4, 0, 1, 2, 3, 4, 0] ~=? remainders 5 [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
 
-          -- squares
-          TestCase (assertEqual "squares" []  (squares [])),
-          TestCase (assertEqual "squares" [1,4,9,16,25]  (squares [1,2,3,4,5])),
+        -- squares
+      , [] ~=? squares []
+      , [1,4,9,16,25] ~=? squares [1,2,3,4,5]
 
-          -- lengths
-          TestCase (assertEqual "lengths" []  (lengths [])),
-          TestCase (assertEqual "lengths" [0, 1, 2, 3, 4]  (lengths [[], [1], [1,2], [1,2,3], [1,2,3,4]])),
+        -- lengths
+      , [] ~=? lengths []
+      , [0, 1, 2, 3, 4] ~=? lengths [[], [1], [1,2], [1,2,3], [1,2,3,4]]
 
-          -- order
-          TestCase (assertEqual "order" []             (order [])),
-          TestCase (assertEqual "order" []             (order [(9,1), (9,2), (9,3)])),
-          TestCase (assertEqual "order" [(9,4), (9,5)] (order [(9,1), (9,2), (9,3), (9,4), (9,5)])),
+        -- order
+      , []             ~=? order []
+      , []             ~=? order [(9,1), (9,2), (9,3)]
+      , [(9,4), (9,5)] ~=? order [(9,1), (9,2), (9,3), (9,4), (9,5)]
 
-          -- pairs
-          TestCase (assertEqual "pairs" []        (pairs [])),
-          TestCase (assertEqual "pairs" []        (pairs [1, 3, 5, 7, 9, 11])),
-          TestCase (assertEqual "pairs" [2, 4, 6] (pairs [1, 2, 3, 4, 5, 6])),
+        -- pairs
+      , []        ~=? pairs []
+      , []        ~=? pairs [1, 3, 5, 7, 9, 11]
+      , [2, 4, 6] ~=? pairs [1, 2, 3, 4, 5, 6]
 
-          -- chars
-          TestCase (assertEqual "chars" []              (chars [])),
-          TestCase (assertEqual "chars" []              (chars ['1', '2', '3'])),
-          TestCase (assertEqual "chars" ['a', 'b', 'c'] (chars ['1', '2', '3', 'a', 'b', 'c'])),
+        -- chars
+      , []              ~=? chars []
+      , []              ~=? chars ['1', '2', '3']
+      , ['a', 'b', 'c'] ~=? chars ['1', '2', '3', 'a', 'b', 'c']
 
-          -- moreThan
-          TestCase (assertEqual "moreThan" ([]::[[Int]])      (moreThan ([]::[[Int]]) 2)),
-          TestCase (assertEqual "moreThan" []                 (moreThan [[1], [1,2], [2,1], [2], []] 2)),
-          TestCase (assertEqual "moreThan" [[1,2,3], [4,5,6]] (moreThan [[1], [1,2], [1,2,3], [], [4,5,6]] 2)),
-
-          -- last tests to avoid trailing comma
-          TestCase (assertEqual "closing" 0  0)
-        ]
+        -- moreThan
+      , ([]::[[Int]])      ~=? moreThan ([]::[[Int]]) 2
+      , []                 ~=? moreThan [[1], [1,2], [2,1], [2], []] 2
+      , [[1,2,3], [4,5,6]] ~=? moreThan [[1], [1,2], [1,2,3], [], [4,5,6]] 2
+      ]
     )
 
 -----------------------------------------------------------------------------------------

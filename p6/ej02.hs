@@ -27,41 +27,41 @@ tree_4 = (Join  (Tip 1)
          )
 
 tree_4_mirror =
-         (Join
+          (Join
+            (Join
+              (Join
                 (Join
-                      (Join
-                        (Join
-                              (Join (Tip 7) (Tip 6))
-                              (Tip 5)
-                        )
-                        (Join (Tip 4) (Tip 3))
-                      )
-                      (Tip 2)
+                  (Join (Tip 7) (Tip 6))
+                  (Tip 5)
                 )
-                (Tip 1)
-         )
+                (Join (Tip 4) (Tip 3))
+              )
+              (Tip 2)
+            )
+            (Tip 1)
+          )
 
 
 tree_3_map =
         (Join (Tip (-2))
-               (Join (Tip (-4))
-                     (Join (Tip (-6)) (Tip (-8)))
-               )
-         )
+              (Join (Tip (-4))
+                    (Join (Tip (-6)) (Tip (-8)))
+              )
+        )
 
 
 
 tree_4_map =
-         (Join  (Tip (-2))
-                (Join (Tip (-4))
-                      (Join
-                        (Join (Tip (-6)) (Tip (-8)))
-                        (Join (Tip (-10))
-                              (Join (Tip (-12)) (Tip (-14)))
-                        )
-                      )
+    (Join (Tip (-2))
+          (Join (Tip (-4))
+                (Join
+                  (Join (Tip (-6)) (Tip (-8)))
+                  (Join (Tip (-10))
+                        (Join (Tip (-12)) (Tip (-14)))
+                  )
                 )
-         )
+          )
+    )
 
 
 -- Tests
@@ -69,46 +69,43 @@ main = do
   runTestTT
     (
       TestList
-        [
-          -- heightTip
-          TestCase (assertEqual "heightTip" 0 (heightTip tree_1)),
-          TestCase (assertEqual "heightTip" 1 (heightTip tree_2)),
-          TestCase (assertEqual "heightTip" 3 (heightTip tree_3)),
-          TestCase (assertEqual "heightTip" 5 (heightTip tree_4)),
+      [
+        -- heightTip
+        0 ~=? heightTip tree_1
+      , 1 ~=? heightTip tree_2
+      , 3 ~=? heightTip tree_3
+      , 5 ~=? heightTip tree_4
 
-          -- leaves
-          TestCase (assertEqual "leaves" 1 (leaves tree_1)),
-          TestCase (assertEqual "leaves" 2 (leaves tree_2)),
-          TestCase (assertEqual "leaves" 4 (leaves tree_3)),
-          TestCase (assertEqual "leaves" 7 (leaves tree_4)),
+        -- leaves
+      , 1 ~=? leaves tree_1
+      , 2 ~=? leaves tree_2
+      , 4 ~=? leaves tree_3
+      , 7 ~=? leaves tree_4
 
-          -- nodes
-          TestCase (assertEqual "nodes" 0 (nodes tree_1)),
-          TestCase (assertEqual "nodes" 1 (nodes tree_2)),
-          TestCase (assertEqual "nodes" 3 (nodes tree_3)),
-          TestCase (assertEqual "nodes" 6 (nodes tree_4)),
+        -- nodes
+      , 0 ~=? nodes tree_1
+      , 1 ~=? nodes tree_2
+      , 3 ~=? nodes tree_3
+      , 6 ~=? nodes tree_4
 
-          -- walkover
-          TestCase (assertEqual "walkover" [Tip 1] (walkover tree_1)),
-          TestCase (assertEqual "walkover" [Tip 1,Tip 2] (walkover tree_2)),
-          TestCase (assertEqual "walkover" [Tip 1,Tip 2,Tip 3,Tip 4] (walkover tree_3)),
-          TestCase (assertEqual "walkover" [Tip 1,Tip 2,Tip 3,Tip 4,Tip 5,Tip 6,Tip 7] (walkover tree_4)),
+        -- walkover
+      , [Tip 1] ~=? walkover tree_1
+      , [Tip 1,Tip 2] ~=? walkover tree_2
+      , [Tip 1,Tip 2,Tip 3,Tip 4] ~=? walkover tree_3
+      , [Tip 1,Tip 2,Tip 3,Tip 4,Tip 5,Tip 6,Tip 7] ~=? walkover tree_4
 
-          -- mirrorTip
-          TestCase (assertEqual "mirrorTip" (Tip 1) (mirrorTip tree_1)),
-          TestCase (assertEqual "mirrorTip" (Join (Tip 2) (Tip 1)) (mirrorTip tree_2)),
-          TestCase (assertEqual "mirrorTip" tree_3_mirror (mirrorTip tree_3)),
-          TestCase (assertEqual "mirrorTip" tree_4_mirror (mirrorTip tree_4)),
+        -- mirrorTip
+      , Tip 1                ~=? mirrorTip tree_1
+      , Join (Tip 2) (Tip 1) ~=? mirrorTip tree_2
+      , tree_3_mirror ~=? mirrorTip tree_3
+      , tree_4_mirror ~=? mirrorTip tree_4
 
-          -- mapTip
-          TestCase (assertEqual "mapTip" (Tip (-2)) (mapTip (*(-2)) tree_1)),
-          TestCase (assertEqual "mapTip" (Join (Tip (-2)) (Tip (-4))) (mapTip (*(-2)) tree_2)),
-          TestCase (assertEqual "mapTip" tree_3_map (mapTip (*(-2)) tree_3)),
-          TestCase (assertEqual "mapTip" tree_4_map (mapTip (*(-2)) tree_4)),
-
-          -- last tests to avoid trailing comma
-          TestCase (assertEqual "closing" 0  0)
-        ]
+        -- mapTip
+      , Tip (-2)                   ~=? mapTip (*(-2)) tree_1
+      , Join (Tip (-2)) (Tip (-4)) ~=? mapTip (*(-2)) tree_2
+      , tree_3_map ~=? mapTip (*(-2)) tree_3
+      , tree_4_map ~=? mapTip (*(-2)) tree_4
+      ]
     )
 
 -----------------------------------------------------------------------------------------

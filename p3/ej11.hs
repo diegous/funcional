@@ -5,22 +5,19 @@ main = do
   runTestTT
     (
       TestList
-        [
-          -- sumDigit'
-          TestCase (assertEqual ""  1 (sumDigit '0' 1)),
-          TestCase (assertEqual ""  2 (sumDigit '1' 1)),
-          TestCase (assertEqual ""  3 (sumDigit '2' 1)),
-          TestCase (assertEqual ""  4 (sumDigit '3' 1)),
-          TestCase (assertEqual ""  5 (sumDigit '4' 1)),
-          TestCase (assertEqual ""  6 (sumDigit '5' 1)),
-          TestCase (assertEqual ""  7 (sumDigit '6' 1)),
-          TestCase (assertEqual ""  8 (sumDigit '7' 1)),
-          TestCase (assertEqual ""  9 (sumDigit '8' 1)),
-          TestCase (assertEqual "" 10 (sumDigit '9' 1)),
-
-          -- last tests to avoid trailing comma
-          TestCase (assertEqual "closing" 0  0)
-        ]
+      [
+        -- sumDigit'
+         1 ~=? sumDigit '0' 1
+      ,  2 ~=? sumDigit '1' 1
+      ,  3 ~=? sumDigit '2' 1
+      ,  4 ~=? sumDigit '3' 1
+      ,  5 ~=? sumDigit '4' 1
+      ,  6 ~=? sumDigit '5' 1
+      ,  7 ~=? sumDigit '6' 1
+      ,  8 ~=? sumDigit '7' 1
+      ,  9 ~=? sumDigit '8' 1
+      , 10 ~=? sumDigit '9' 1
+      ]
     )
 
 -----------------------------------------------------------------------------------------
