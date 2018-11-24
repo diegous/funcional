@@ -1,35 +1,40 @@
 ## Demostrar `fastrev ys xs = (fastrev [] xs) ++ ys` para todas listas xs, ys
 
-_Por inducción en la estructuras de las listas_
+La propiedad para demostrar es la siguiente
+para todo xs. para todo ys. `fastrev ys xs = (fastrev [] xs) ++ ys`
 
-**Caso xs = [])**
+_Por inducción en la estructura de la lista xs_
+
+
+### Caso xs = []
 ```
-fastrev ys xs
+fastrev ys []
 =                       (def fastrev)
 ys
 
 
-(fastrev [] xs) ++ ys
+(fastrev [] []) ++ ys
 =                       (def fastrev)
 [] ++ ys
 =                       (def ++)
 ys
 ```
 
-**Caso xs = l:ls)**
+### Caso xs = x:xs'
 
-HI: `fastrev (l:ys) ls = (fastrev [l] ls) ++ ys`
+mal HI:            `fastrev (x:ys) xs' = (fastrev [x] xs') ++ ys`
+HI: para todo ys'. `fastrev ys' xs' = (fastrev []  xs') ++ ys'`
 ```
-fastrev ys xs
+fastrev ys (x:xs')
 =                       (def fastrev)
-fastrev (l:ys) ls
-=                       (HI)
-(fastrev [l] ls) ++ ys
+fastrev (x:ys) xs'
+=                       (HI con ys' = x:ys)
+(fastrev [x] xs') ++ ys
 
 
-(fastrev [] xs) ++ ys
+(fastrev [] (x:xs')) ++ ys
 =                       (def fastrev)
-(fastrev (l:[]) ls) ++ ys
+(fastrev (x:[]) xs') ++ ys
 =                       (sintaxis listas)
-(fastrev [l] ls) ++ ys
+(fastrev [x] xs') ++ ys
 ```
