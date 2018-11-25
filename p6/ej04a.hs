@@ -66,11 +66,11 @@ main = do
       , Cat (Unit 1) (Unit 2) ~=? normSeq (Cat (Cat Nil (Unit 1)) (Unit 2))
 
         -- tailSeq
-      , (Unit 2) ~=? tailSeq (Cat (Unit 1) (Unit 2))
-      , Nil ~=? tailSeq seq_l_1
-      , Cat Nil (Unit 2) ~=? tailSeq seq_l_2
-      , Cat (Cat Nil (Unit 2)) (Cat (Unit 3) (Unit 4)) ~=? tailSeq seq_l_3
-      , Cat (Cat (Cat Nil Nil) Nil) Nil ~=? tailSeq seq_l_4
+      , Cat Nil (Unit 2) ~=? tailSeq (Cat (Unit 1) (Unit 2))
+      , Cat Nil Nil ~=? tailSeq seq_l_1
+      , Cat (Cat Nil Nil) (Unit 2) ~=? tailSeq seq_l_2
+      , Cat (Cat (Cat Nil Nil) (Unit 2)) (Cat (Unit 3) (Unit 4)) ~=? tailSeq seq_l_3
+      , Cat (Cat (Cat Nil Nil) Nil) (Cat Nil Nil) ~=? tailSeq seq_l_4
 
         -- eqSeq
       , True  ~=? eqSeq (Nil::(Seq Int)) Nil
@@ -84,10 +84,10 @@ main = do
 
         -- seq2List
       , ([]::[Int]) ~=? seq2List seq_nil
-      , [1]       ~=? seq2List seq_unit
-      , [1,2]     ~=? seq2List seq_l_2
-      , [1,2,3,4] ~=? seq2List seq_l_3
-      , [1]       ~=? seq2List seq_l_4
+      , [1]         ~=? seq2List seq_unit
+      , [1,2]       ~=? seq2List seq_l_2
+      , [1,2,3,4]   ~=? seq2List seq_l_3
+      , [1]         ~=? seq2List seq_l_4
       ]
     )
 
@@ -136,11 +136,9 @@ headSeq (Cat s1 s2) = if isEmpty s1 then headSeq s2
 
 -- tailSeq, que remueve la cabeza de una secuencia.
 tailSeq :: (Seq a) -> (Seq a)
-tailSeq (Cat (Unit x) s)   = s
-tailSeq (Cat Nil (Unit x)) = Nil
-tailSeq (Cat Nil s)        = Cat Nil (tailSeq s)
-tailSeq (Cat s1 s2)        = if isEmpty s1 then Cat s1 (tailSeq s2)
-                                           else Cat (tailSeq s1) s2
+tailSeq (Unit x)    = Nil
+tailSeq (Cat s1 s2) = if isEmpty s1 then Cat s1 (tailSeq s2)
+                                    else Cat (tailSeq s1) s2
 
 
 -- normSeq, que elimina todos los Nils innecesarios de una secuencia. Por ejemplo, normSeq (Cat (Cat Nil (Unit 1)) Nil) = Unit 1
