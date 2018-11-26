@@ -16,52 +16,49 @@ main = do
   runTestTT
     (
       TestList
-        [
-          -- pal
-          TestCase (assertEqual "pal" True  (pal "a") ),
-          TestCase (assertEqual "pal" True  (pal "aa") ),
-          TestCase (assertEqual "pal" False (pal "ab") ),
-          TestCase (assertEqual "pal" True  (pal "abcde fgh i jk lm ml kj i hgf edcba") ),
-          TestCase (assertEqual "pal" False (pal "abcde fgh i jk lm ml kj i igf edcba") ),
-          TestCase (assertEqual "pal" True  (pal "abcde fgh i jk lm  ml kj i hgf edcba") ),
-          TestCase (assertEqual "pal" False (pal "abcde fgh i jk lm ml kj i hgf edcba ") ),
+      [
+        -- pal
+         True ~=? pal "a"
+      ,  True ~=? pal "aa"
+      , False ~=? pal "ab"
+      ,  True ~=? pal "abcde fgh i jk lm ml kj i hgf edcba"
+      , False ~=? pal "abcde fgh i jk lm ml kj i igf edcba"
+      ,  True ~=? pal "abcde fgh i jk lm  ml kj i hgf edcba"
+      , False ~=? pal "abcde fgh i jk lm ml kj i hgf edcba "
 
-          -- hs
-          TestCase (assertEqual "hs" 0 (hs []) ),
-          TestCase (assertEqual "hs" 4 (hs ["a", "b", "c", "h", "ah", "ha", "hoy", "haber", "eloyh"]) ),
+        -- hs
+      , 0 ~=? hs []
+      , 4 ~=? hs ["a", "b", "c", "h", "ah", "ha", "hoy", "haber", "eloyh"]
 
-          -- avgLength
-          TestCase (assertEqual "avgLength" 0.0 (avgLength ["", "", "", ""]) ),
-          TestCase (assertEqual "avgLength" 2.5 (avgLength ["a", "ab", "abc", "abcd"]) ),
-          TestCase (assertEqual "avgLength" 2.0 (avgLength ["a", "ab", "abc", "abcd", ""]) ),
+        -- avgLength
+      , 0.0 ~=? avgLength ["", "", "", ""]
+      , 2.5 ~=? avgLength ["a", "ab", "abc", "abcd"]
+      , 2.0 ~=? avgLength ["a", "ab", "abc", "abcd", ""]
 
-          -- adjacents
-          TestCase (assertEqual "adjacents" ([]::[(Int,Int)])     (adjacents []) ),
-          TestCase (assertEqual "adjacents" ([]::[(Int,Int)])     (adjacents [2]) ),
-          TestCase (assertEqual "adjacents" [(2,4)]               (adjacents [2,4]) ),
-          TestCase (assertEqual "adjacents" [(2,1),(1,11),(11,4)] (adjacents [2,1,11,4]) ),
+        -- adjacents
+      , ([]::[(Int,Int)])     ~=? adjacents []
+      , ([]::[(Int,Int)])     ~=? adjacents [2]
+      , [(2,4)]               ~=? adjacents [2,4]
+      , [(2,1),(1,11),(11,4)] ~=? adjacents [2,1,11,4]
 
-          -- diffAdj
-          TestCase (assertEqual "diffAdj" ([]::[(Int,Int)])    (diffAdj []) ),
-          TestCase (assertEqual "diffAdj" ([]::[(Int,Int)])    (diffAdj [1]) ),
-          TestCase (assertEqual "diffAdj" ([]::[(Int,Int)])    (diffAdj [1,2,3]) ),
-          TestCase (assertEqual "diffAdj" [(2,4)]              (diffAdj [1,2,4,5]) ),
-          TestCase (assertEqual "diffAdj" [(0,2),(2,8),(9,11)] (diffAdj [0,2,8,9,11,12]) ),
+        -- diffAdj
+      , ([]::[(Int,Int)])    ~=? diffAdj []
+      , ([]::[(Int,Int)])    ~=? diffAdj [1]
+      , ([]::[(Int,Int)])    ~=? diffAdj [1,2,3]
+      , [(2,4)]              ~=? diffAdj [1,2,4,5]
+      , [(0,2),(2,8),(9,11)] ~=? diffAdj [0,2,8,9,11,12]
 
-          -- remDups
-          -- TestCase (assertEqual "remDups" ([]::[Int]) (remDups []) ),
-          -- TestCase (assertEqual "remDups" [1]         (remDups [1]) ),
-          -- TestCase (assertEqual "remDups" [1]         (remDups [1,1]) ),
-          -- TestCase (assertEqual "remDups" [1,2,4,5,2] (remDups [1,2,2,4,5,5,2]) ),
+        -- remDups
+      ,  ([]::[Int]) ~=? remDups []
+      ,  [1]         ~=? remDups [1]
+      ,  [1]         ~=? remDups [1,1]
+      ,  [1,2,4,5,2] ~=? remDups [1,2,2,4,5,5,2]
 
-          -- primes
-          TestCase (assertEqual "primes" [2] (primes 1) ),
-          TestCase (assertEqual "primes" [2,3] (primes 2) ),
-          TestCase (assertEqual "primes" [2,3,5] (primes 3) ),
-
-
-          TestCase (assertEqual "closing" 0  0)
-        ]
+        -- primes
+      , [2]     ~=? primes 1
+      , [2,3]   ~=? primes 2
+      , [2,3,5] ~=? primes 3
+      ]
     )
 
 -----------------------------------------------------------------------------------------
@@ -95,8 +92,13 @@ diffAdj xs = filter (\(x,y) -> even (x-y)) (adjacents xs)
 
 -- remDups, que devuelve una lista con los mismos elementos que la original, pero eliminando todos aquellos
 -- valores que fueran adyacentes e iguales, dejando una sola ocurrencia de cada uno.
--- remDups :: [Int] -> [Int]
--- remDups = foldr (\x ys -> if x == (head ys) then ys else x:ys) []
+remDups :: [Int] -> [Int]
+remDups = foldr f []
+        where f x ys = if ys == []
+                       then [x]
+                       else if x == (head ys)
+                            then ys
+                            else (x:ys)
 
 
 -- primes, que dado un entero n devuelve una lista con los n primeros primos.

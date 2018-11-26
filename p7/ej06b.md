@@ -23,23 +23,29 @@ concat []
 ```
 
 ### Caso xss = xs:xss'
-_HI: `map f . concat xss' = concat . map (map f) xss'`_
+_HI: `(map f . concat) xss' = (concat . map (map f)) xss'`_
 ```
+(concat . map (map f)) (xs:xss')
+=             def (.)
 concat (map (map f) (xs:xss'))
 =             def map
-concat (map f xs):(map (map f) xss')
-=             def concat
-(map f xs) ++ (concat . map (map f) xss')
+concat ((map f xs):(map (map f) xss'))
+=             def concat.2 y (.)
+(map f xs) ++ ((concat . map (map f)) xss')
 =             HI
-(map f xs) ++ (map f . concat xss')
+(map f xs) ++ ((map f . concat) xss')
 =             def (++)
 
 
 
 
-(map f) . concat (xs:xss')
-=             def concat
+(map f . concat) (xs:xss')
+=             def (.) y concat.2
 map f (xs ++ (concat xss'))
+=             prop 6.a
+map f xs ++ map f (concat xss')
+=             def (.)
+map f xs ++ (map f . concat) xss'
 
 ```
 SIN TERMINAR, CÓMO SIGO ACÁ?
