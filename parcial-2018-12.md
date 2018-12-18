@@ -47,7 +47,9 @@ representaciones del dato se encuentra en el árbol. Esto sería, si todas las
 listas de `Bit`s obtenidas a partir del dato indican un camino en el árbol
 que arriba a un nodo `True`.
 
-#### c. no me lo acuerdo ¯\_(ツ)_/¯
+#### c. `insertMH :: MHash a -> a -> BitT -> BitT`
+Recibe un dato `a` y una función para pasarlo a listas de `Bit`s y un árbol
+e inserta todas las listas de bits en el árbol.
 
 #### d. `allBits :: BitT -> [[Bit]]`
 Dado un árbol devuelve todas las cadenas para las que los nodos de ese árbol 
